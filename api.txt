@@ -1,0 +1,37 @@
+The API design in your project follows a RESTful approach, 
+with each endpoint handling a specific resource or action. 
+Here is a summary of the API endpoints and their purposes:
+
+Create Notebook (src/app/api/createNoteBook/route.ts)
+
+Method: POST
+Description: Creates a new notebook with a generated image.
+Request Body: { name: string }
+Response: { note_id: number }
+Save Note (src/app/api/saveNote/route.ts)
+
+Method: POST
+Description: Saves the editor state of a note.
+Request Body: { noteId: number, editorState: string }
+Response: { success: boolean }
+Delete Note (src/app/api/deleteNote/route.ts)
+
+Method: POST
+Description: Deletes a note by its ID.
+Request Body: { noteId: number }
+Response: "ok"
+Upload to Firebase (src/app/api/uploadToFirebase/route.ts)
+
+Method: POST
+Description: Uploads an image to Firebase and updates the note with the Firebase URL.
+Request Body: { noteId: number }
+Response: "ok"
+Completion (src/app/api/completion/route.ts)
+
+Method: POST
+Description: Generates a completion for a given prompt using OpenAI.
+Request Body: { prompt: string }
+Response: Streaming text response
+Each endpoint is designed to handle a specific task related to note management, 
+such as creating, saving, deleting, and uploading notes. The endpoints use appropriate 
+HTTP methods (POST) and return JSON responses or status messages.
