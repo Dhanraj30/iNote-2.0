@@ -12,9 +12,10 @@ export async function POST(req: Request) {
   try {
     // Initialize Supabase client
     const supabase = await createClient();
-    const { data: { user }, error } = await supabase.auth.getUser();
-    
-    if (error || !user) {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      console.error("User authentication failed:", userError?.message, "User data:", user);
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
@@ -24,6 +25,8 @@ export async function POST(req: Request) {
     if (!noteId || !editorState) {
       return new NextResponse("Note ID and editorState are required", { status: 400 });
     }
+    
+    console.log(`Received User ID: ${user.id}, Note ID: ${noteId}, Parsed Note ID: ${parseInt(noteId)}, typeof noteId: ${typeof noteId}`);
 
     // Verify note belongs to user
     const notes = await db
@@ -31,11 +34,15 @@ export async function POST(req: Request) {
       .from($notes)
       .where(eq($notes.id, parseInt(noteId)))
       .where(eq($notes.userId, user.id));
-    
-      if (notes.length !== 1) {
-        console.error(`Note with id ${noteId} not found or unauthorized for user ${user.id}`);
-        return new NextResponse("Note not found or unauthorized", { status: 404 });
-      }
+
+     console.log("Query result:", notes, "Query conditions:", { id: parseInt(noteId), userId: user.id });
+
+    // Filter to ensure we get the exact note
+    const note = notes.find(n => n.id === parseInt(noteId));
+    if (!note) {
+      console.error(`Note with id ${noteId} not found or unauthorized for user ${user.id.trim()}`);
+      return new NextResponse("Note not found or unauthorized", { status: 404 });
+    }
 
     // Extract plain text from editorState (TipTap JSON)
     let parsedEditorState;
@@ -57,7 +64,7 @@ export async function POST(req: Request) {
     };
     
     const text = extractText(parsedEditorState);
-    if (!text || text.trim().length < 50) {
+    if (!text || text.trim().length < 30) {
       return new NextResponse("Note content is too short for summarization (minimum 50 characters)", { status: 400 });
     }
 

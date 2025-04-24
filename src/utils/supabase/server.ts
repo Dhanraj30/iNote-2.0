@@ -1,11 +1,11 @@
 
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import type { Database } from '@/utils/supabase/types';
+//import type { Database } from '@/utils/supabase/types';
 
 export async function createClient() {
   const cookieStore = await cookies();
-  return createServerClient<Database>(
+  const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -18,11 +18,18 @@ export async function createClient() {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
             );
-          } catch {
+          } catch(error) {
+            console.error("Error setting cookies:", error);
             // Ignore errors during cookie setting
           }
         },
       },
     }
   );
+
+  // Log the user to verify session
+  const { data: { user } } = await supabase.auth.getUser();
+  console.log("Current user from session:", user?.id);
+
+  return supabase;
 }
