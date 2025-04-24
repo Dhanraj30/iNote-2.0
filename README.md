@@ -1,5 +1,7 @@
 # AI Note-Taking Assistant
 
+![](https://github.com/Dhanraj30/iNote-2.0/blob/main/sc.png)
+
 AI Note-Taking Assistant is a web application designed to help users create, organize, and summarize their notes with the power of AI. The app provides a rich text editor, AI-powered summarization, and seamless user experience for managing notebooks.
 
 ## Features
