@@ -23,6 +23,7 @@ AI Note-Taking Assistant is a web application designed to help users create, org
 - **State Management**: React Query
 - **Editor**: TipTap with custom extensions
 
+
 ## Getting Started
 
 ### Prerequisites
