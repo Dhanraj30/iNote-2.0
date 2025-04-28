@@ -1,8 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Note-Taking Assistant
+
+![](https://github.com/Dhanraj30/iNote-2.0/blob/main/sc.png)
+
+AI Note-Taking Assistant is a web application designed to help users create, organize, and summarize their notes with the power of AI. The app provides a rich text editor, AI-powered summarization, and seamless user experience for managing notebooks.
+
+## Features
+
+- **Rich Text Editor**: Create and edit notes using a feature-rich editor powered by TipTap.
+- **AI-Autocompletion**: Auto complete your sentences based on previous text
+- **AI-Powered Summarization**: Generate concise summaries of your notes using AI.
+- **Notebook Management**: Create, edit, and delete notebooks with ease.
+- **Drawing Support**: Add drawings to your notes using an integrated  excalidraw 
+- **User Authentication**: Secure login and session management using Supabase with google
+
+
+## Tech Stack
+
+- **Frontend**: React, Next.js, Tailwind CSS, shadcn ui
+- **Backend**: Node.js, Next.js API routes
+- **Database**: Supabase, PostgreSql with drizzle orm
+- **AI Integration**: Google Generative AI (Gemini API), Hugging face ai model
+- **State Management**: React Query
+- **Editor**: TipTap with custom extensions
+
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v16 or higher)
+- Supabase account
+- Google Generative AI API key
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd iNote
+   npm install
+   ```
+Set up environment variables: Create a .env file in the root directory with the following variables:
+```
+NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
+NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-supabase-anon-key>
+GEMINI_API_KEY=<your-google-generative-ai-key>
+SUPABASE_DB_URL=db_url
+HUGGING_FACE_ACCESS_TOKEN=
+```
 
 ```bash
 npm run dev
