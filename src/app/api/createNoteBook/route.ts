@@ -67,10 +67,15 @@ export async function POST(req: Request) {
         }
 
         // Update the notebook with the image URL
-        await db
+        const updateResult = await db
           .update($notes)
           .set({ imageUrl })
-          .where(eq($notes.id,noteId));
+          .where(eq($notes.id, noteId));
+        if (!updateResult || updateResult.length === 0) {
+          console.error("Failed to update notebook with image URL: No rows were updated.");
+          return;
+        }
+        console.log("Update result:", updateResult);
       } catch (err) {
         console.error("Error during image generation/upload:", err);
       }
